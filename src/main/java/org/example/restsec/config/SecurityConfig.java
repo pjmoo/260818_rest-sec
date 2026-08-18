@@ -1,5 +1,6 @@
 package org.example.restsec.config;
 
+import org.example.restsec.auth.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,7 +23,11 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .httpBasic(Customizer.withDefaults())
+//                .httpBasic(Customizer.withDefaults())
+                .httpBasic(
+                        basic -> basic
+                                .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                )
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(

@@ -20,12 +20,15 @@ import java.util.List;
 
 @Configuration
 public class SecurityConfig {
+    // JwtAuthenticationFilter jwtAuthenticationFilter -> RequiredArgsConstructor
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
                 .cors(Customizer.withDefaults()) // CORS
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
+                // 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -50,6 +53,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/chair/**")
                                 .hasRole("ADMIN")
                 )
+                // UsernamePasswordAuthenticationFilter 앞에 Jwt를 해석하는 필터를 추가
                 .addFilterBefore(jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class);
         // -> UsernamePasswordAuthenticationToken

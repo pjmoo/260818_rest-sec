@@ -26,6 +26,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public AccessTokenDTO login(
+//            @AuthenticationPrincipal
             @RequestBody LoginDTO dto // username, password
     ) {
         // import org.springframework.security.core.Authentication;
@@ -44,5 +45,6 @@ public class AuthController {
     public record LoginDTO(String username, String password) {
     }
 
-    public record AccessTokenDTO(String accessToken) {}
+    public record AccessTokenDTO(String accessToken) {
+    }
 }

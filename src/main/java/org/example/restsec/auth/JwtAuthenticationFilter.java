@@ -35,6 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 'Authorization' 헤더에서 토큰 추출
         String authHeader = request.getHeader("Authorization");
 
+        // null이거나 비어있는 문자열을 걸러내고, 'Bearer '로 시작하는지 확인
         if (StringUtils.isBlank(authHeader) || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -46,6 +47,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             Claims claims = jwtTokenProvider.parseClaims(token);
             // .parseSignedClaims(token)
+            // 1. 'Bearer '만 앞에 붙였고 뒤에는 다 서식이 안 맞음
+            // 2. 만료되는 경우
+            // 3. SecretKey가 맞지 않는 경우
             String username = claims.getSubject(); // 꼭 username은 아니어도 됨 (uuid, seq-id)
             // 이후에 UserDetailService 는 username을 요구하므로 호환 입장에서 username을 사용
             String roles = claims.get("roles", String.class);
@@ -66,5 +70,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         // 이거 안하면 뒤로 안넘어감
         filterChain.doFilter(request, response);
+        // 다음 필터에서 보안처리 진행
     }
 }

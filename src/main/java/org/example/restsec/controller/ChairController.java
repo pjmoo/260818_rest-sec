@@ -19,6 +19,12 @@ import java.util.List;
 public class ChairController {
     private final ChairService chairService;
 
+    @DeleteMapping
+    @SecurityRequirement(name = "basicAuth")
+    public void deleteChair() {
+        // 403 권한 테스트용
+    }
+
     @GetMapping
     public List<ChairEntity> getChairs() {
         return chairService.findAll();

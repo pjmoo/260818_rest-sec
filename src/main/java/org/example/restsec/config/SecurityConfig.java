@@ -1,5 +1,6 @@
 package org.example.restsec.config;
 
+import org.example.restsec.auth.RestAccessDeniedHandler;
 import org.example.restsec.auth.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,12 @@ public class SecurityConfig {
                 .httpBasic(
                         basic -> basic
                                 .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+
+                )
+                .exceptionHandling(
+                        ex -> ex
+                                .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                                .accessDeniedHandler(new RestAccessDeniedHandler())
                 )
                 .authorizeHttpRequests(
                         auth -> auth
@@ -40,6 +47,8 @@ public class SecurityConfig {
                                         .permitAll()
                                 .requestMatchers( HttpMethod.POST,"/chair/**")
                                     .authenticated()
+                                .requestMatchers( HttpMethod.DELETE,"/chair/**")
+                                    .hasRole("ADMIN")
                 )
                 .build();
     }

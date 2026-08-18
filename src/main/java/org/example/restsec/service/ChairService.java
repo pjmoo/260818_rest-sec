@@ -25,6 +25,7 @@ public class ChairService {
     }
 
     // save
+    @Transactional
     public ChairEntity save(ChairEntity chairEntity) {
         return chairJpaRepository.save(chairEntity);
     }

@@ -16,6 +16,7 @@ import java.util.List;
 // DispatcherServlet <- 중앙에서 모든 요청을 RequestMapping을 통해 배분
 // -> 각각 세부 메서드 앞에 prefix(접두사)로 /chair -> /chair/{id}...
 @RequiredArgsConstructor // 생성자 주입
+//@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class ChairController {
     private final ChairService chairService;
 
@@ -26,6 +27,7 @@ public class ChairController {
     }
 
     @GetMapping
+//    @CrossOrigin(origins = "http://127.0.0.1:5500")
     public List<ChairEntity> getChairs() {
         return chairService.findAll();
     }

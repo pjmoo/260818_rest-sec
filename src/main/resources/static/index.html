@@ -9,7 +9,10 @@
 </head>
 <body>
     <script>
-        fetch('http://localhost:8080/chair')
+        // fetch('http://localhost:8080/chair')
+        fetch('http://localhost:8080/chair', {
+            method: 'POST'
+        })
             .then(res => res.json())
             .then(console.log);
     </script>

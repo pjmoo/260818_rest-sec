@@ -15,7 +15,7 @@ public class SecurityConfig {
         // 이 사이에 http에다가 메서드 체이닝 -> 설정을 주입
         return http
 //                .csrf(csrf -> csrf.disable())
-//                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(

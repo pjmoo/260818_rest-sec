@@ -44,18 +44,19 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
+                                        "/auth/login",
                                         "/", "/index.html",
                                         "/swagger-ui/**",
                                         "/swagger-ui.html",
                                         "/v3/api-docs/**")
-                                        .permitAll()
+                                .permitAll()
 //                                .requestMatchers("/chair/**")
-                                .requestMatchers( HttpMethod.GET,"/chair/**")
-                                        .permitAll()
-                                .requestMatchers( HttpMethod.POST,"/chair/**")
-                                    .authenticated()
-                                .requestMatchers( HttpMethod.DELETE,"/chair/**")
-                                    .hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/chair/**")
+                                .permitAll()
+                                .requestMatchers(HttpMethod.POST, "/chair/**")
+                                .authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/chair/**")
+                                .hasRole("ADMIN")
                 )
                 .build();
     }

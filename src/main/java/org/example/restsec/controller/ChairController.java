@@ -1,5 +1,6 @@
 package org.example.restsec.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.example.restsec.entity.ChairEntity;
 import org.example.restsec.service.ChairService;
@@ -24,6 +25,7 @@ public class ChairController {
     }
 
     @PostMapping
+    @SecurityRequirement(name = "basicAuth")
     public ChairEntity saveChair(
 //           @RequestBody ChairEntity chairEntity) {
            @RequestBody ChairRequest dto) {

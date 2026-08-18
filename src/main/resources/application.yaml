@@ -23,3 +23,7 @@ spring:
   # 타임리프
   thymeleaf:
     cache: false
+  # 스키마 자동반영
+  jpa:
+    hibernate:
+      ddl-auto: update

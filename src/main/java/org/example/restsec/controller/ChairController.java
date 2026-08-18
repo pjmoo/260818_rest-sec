@@ -21,23 +21,23 @@ public class ChairController {
     private final ChairService chairService;
 
     @DeleteMapping
-    @SecurityRequirement(name = "basicAuth")
+    @SecurityRequirement(name = "bearerAuth")
     public void deleteChair() {
         // 403 권한 테스트용
     }
+
+    @PostMapping
+    @SecurityRequirement(name = "bearerAuth")
+    public ChairEntity saveChair(
+            @RequestBody ChairRequest dto) {
+        return chairService.save(dto.toEntity());
+    }
+
 
     @GetMapping
 //    @CrossOrigin(origins = "http://127.0.0.1:5500")
     public List<ChairEntity> getChairs() {
         return chairService.findAll();
-    }
-
-    @PostMapping
-    @SecurityRequirement(name = "basicAuth")
-    public ChairEntity saveChair(
-//           @RequestBody ChairEntity chairEntity) {
-           @RequestBody ChairRequest dto) {
-        return chairService.save(dto.toEntity());
     }
 
     public record ChairRequest(String name, int price) {

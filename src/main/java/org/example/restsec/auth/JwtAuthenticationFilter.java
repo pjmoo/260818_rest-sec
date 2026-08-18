@@ -2,6 +2,7 @@ package org.example.restsec.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
+import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +34,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // header로부터 토큰을 추출
         // 'Authorization' 헤더에서 토큰 추출
         String authHeader = request.getHeader("Authorization");
+
+        if (StringUtils.isBlank(authHeader) || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         // -> 정제가 덜 끝남 (앞에 토큰을 의미하는 Bearer)
 //        String token = authHeader.substring("Bearer ".length());
         String token = authHeader.substring(7); // 7글자를 앞에서 제거
